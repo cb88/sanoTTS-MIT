@@ -56,6 +56,13 @@ project's own work.
 are data files from that Apache-2.0 package, fetched by tools/get-data.sh and
 not committed. They are not distributed by this repository.
 
+  g2p/readings/*.json    readings written for this project
+
+The CMU Pronouncing Dictionary is BSD-licensed by Carnegie Mellon; the tiny-tts
+package that carries it is Apache-2.0. The readings in g2p/readings/ are this
+project's own work (Apache-2.0): a patch of ARPAbet for words the dictionary
+does not list, applied after the dictionary and never over it.
+
 
 Structurally related (nothing taken)
 ------------------------------------

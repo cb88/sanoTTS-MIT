@@ -64,6 +64,17 @@ than in a comment.
   syllabic ᵊl in coda but keeps its schwa in "hello"; the American flap fires
   between a stressed and a weaker vowel and is blocked after a consonant —
   *water*, *bottle*, *atom*, but not *thirty* or *curtain*.
+* **Stem + suffix for the words CMUdict missed**: it has "holiness" and not
+  "nakedness", and the neural model filled the hole with "nack-dun-diz". When the
+  stem is known the suffix is appended instead — measured over the dictionary,
+  that is what CMUdict itself does 88-95% of the time for `-ness`, `-less`,
+  `-ful`, `-ment`, `-ship`, `-hood`, `-like`, and it is what makes `maketh`,
+  `knowest` and `shewed` come out as the verbs they are. Plurals take the voice
+  of the phone they land on (`cubits`, `loins`), which the old rule got half right.
+* **`g2p/readings/` is a patch, not a fork**: `{ WORD: "ARP ABET" }` for words the
+  dictionary lacks — the Bible's `saith`, `sepulchres`, `Nebuchadnezzar`. It is
+  consulted after the dictionary and before the model, so it fills holes without
+  overriding anything. `tools/speak.js` loads it; `--no-readings` runs without.
 * **Numbers, money, units, times, callsigns**: 1013 is "one thousand thirteen",
   $3.50 is "three dollars fifty", 90% is "ninety percent", 25kg is "twenty five
   kilograms", 20°C is "twenty degrees celsius", "left & right" keeps its "and",

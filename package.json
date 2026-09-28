@@ -1,0 +1,13 @@
+{
+  "name": "sanomit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "English TTS with no GPL in it: Apache-2.0 front end over the MIT nano runtime",
+  "type": "commonjs",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node test/g2p-test.js && node test/engine-test.js",
+    "test-g2p": "node test/g2p-test.js",
+    "speak": "node tools/speak.js"
+  }
+}

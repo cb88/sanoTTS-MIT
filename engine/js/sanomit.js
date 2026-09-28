@@ -89,6 +89,7 @@ var SanoMIT = (function () {
     if (!G2p) throw new Error("no front end: pass config.g2p or load smit-g2p.js first");
     var frontend = G2p.createFrontend({
       cmudict: config.cmudict || null,
+      readings: config.readings || null,
       neural: config.g2pModel ? G2p.loadNeuralModel(config.g2pModel) : null,
       vocabulary: config.vocabulary || null,
       maxTokens: config.maxTokens || undefined

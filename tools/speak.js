@@ -20,11 +20,26 @@ const support = require('./node-support');
 const SanoMIT = require('../engine/js/sanomit.js');
 const SanoMitG2p = require('../g2p/js/smit-g2p.js');
 
+/* Every readings patch in g2p/readings, merged. A patch holds readings the
+ * dictionary lacks; the front end applies it after the dictionary and before
+ * the neural model, so it can only fill holes. --no-readings turns it off. */
+function readings() {
+  if (process.argv.includes('--no-readings')) return null;
+  const dir = path.join(__dirname, '..', 'g2p', 'readings');
+  if (!fs.existsSync(dir)) return null;
+  const merged = {};
+  for (const f of fs.readdirSync(dir).filter(n => n.endsWith('.json'))) {
+    const patch = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    for (const k of Object.keys(patch)) if (!k.startsWith('_')) merged[k] = patch[k];
+  }
+  return Object.keys(merged).length ? merged : null;
+}
+
 async function main() {
   const argv = process.argv.slice(2);
   const outAt = argv.indexOf('--out');
   const out = outAt >= 0 ? argv[outAt + 1] : '/tmp/sanomit.wav';
-  const rest = argv.filter((a, i) => a !== '--out' && i !== outAt + 1 && a !== '--phonemes' && a !== '--stdin');
+  const rest = argv.filter((a, i) => a !== '--no-readings' && a !== '--out' && i !== outAt + 1 && a !== '--phonemes' && a !== '--stdin');
   const text = argv.includes('--stdin')
     ? fs.readFileSync(0, 'utf8').trim()
     : (rest.join(' ') || 'Hello world, the weather is nice today.');
@@ -32,7 +47,8 @@ async function main() {
   if (argv.includes('--phonemes')) {
     const fe = SanoMitG2p.createFrontend({
       cmudict: support.json(support.data('cmudict.json')),
-      neural: SanoMitG2p.loadNeuralModel(support.json(support.data('g2p_model.json')))
+      neural: SanoMitG2p.loadNeuralModel(support.json(support.data('g2p_model.json'))),
+      readings: readings()
     });
     /* The same pieces say() would render, so this shows what the runtime gets. */
     const window = Math.min(SanoMIT.DEFAULT_CHUNK_TOKENS, fe.maxTokens);
@@ -57,7 +73,8 @@ async function main() {
     frontBlob: fs.readFileSync(support.voiceFile('front_q8.bin')),
     decBlob: fs.readFileSync(support.voiceFile('model_q8.bin')),
     cmudict: support.json(support.data('cmudict.json')),
-    g2pModel: support.json(support.data('g2p_model.json'))
+    g2pModel: support.json(support.data('g2p_model.json')),
+    readings: readings()
   });
 
   const r = await engine.say(text, { seed: true });

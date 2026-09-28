@@ -12,12 +12,32 @@ const path = require('path');
 const G2p = require('../g2p/js/smit-g2p.js');
 
 const ROOT = path.join(__dirname, '..');
-const TINY = path.join(ROOT, '..', 'vendor', 'tiny-tts', 'npm-package');
+
+/* The data files live next to the vendor checkout when there is one, and in
+ * g2p/data (where tools/get-data.sh puts them) when there is not. */
+const SOURCES = [path.join(ROOT, '..', 'vendor', 'tiny-tts', 'npm-package'),
+  path.join(ROOT, 'g2p', 'data')];
+const from = name => {
+  const hit = SOURCES.find(dir => fs.existsSync(path.join(dir, name)));
+  if (!hit) throw new Error(name + ' is not in ' + SOURCES.join(' or ') + ' — run tools/get-data.sh');
+  return JSON.parse(fs.readFileSync(path.join(hit, name), 'utf8'));
+};
 
 const cases = JSON.parse(fs.readFileSync(path.join(__dirname, 'cases', 'g2p.json'), 'utf8'));
-const cmudict = JSON.parse(fs.readFileSync(path.join(TINY, 'cmudict.json'), 'utf8'));
-const neural = G2p.loadNeuralModel(JSON.parse(fs.readFileSync(path.join(TINY, 'g2p_model.json'), 'utf8')));
+const cmudict = from('cmudict.json');
+const neural = G2p.loadNeuralModel(from('g2p_model.json'));
 const fe = G2p.createFrontend({ cmudict, neural });
+
+/* every readings patch in g2p/readings, the way tools/speak.js loads them */
+const READINGS = {};
+{
+  const dir = path.join(ROOT, 'g2p', 'readings');
+  for (const f of fs.readdirSync(dir).filter(n => n.endsWith('.json'))) {
+    const patch = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    for (const k of Object.keys(patch)) if (!k.startsWith('_')) READINGS[k] = patch[k];
+  }
+}
+const fePatched = G2p.createFrontend({ cmudict, neural, readings: READINGS });
 const feNoNeural = G2p.createFrontend({ cmudict });
 
 let checks = 0, failures = 0;
@@ -103,6 +123,47 @@ console.log('text past one window is cut where a listener hears the break');
   is('even a wordless string', bits.every(p => fe.costOf(p) <= 40) && bits.join('') === url, true);
   const tiny = fe.planChunks('words in a row', 3);
   is('a hopeless budget still terminates', tiny.length > 1 && tiny.join('') === 'words in a row', true);
+}
+
+console.log('a word the dictionary missed is finished by rule, not guessed');
+{
+  /* CMUdict has "holiness" and not "nakedness"; the neural model answered the
+   * gap with the wrong stem vowel and a voiced S ("nack-dun-diz"). */
+  const derived = {
+    nakedness: ['stem+ness', 'nˈAkədnəs'],
+    bareness: ['stem+ness', 'bˈɛɹnəs'],
+    maketh: ['stem+eth', 'mˈækəθ'],
+    knowest: ['stem+est', 'nˈOəst'],
+    shewed: ['stem+ed', 'ʃˈud'],
+    thyself: ['stem+self', 'ðˈIsɛlf']
+  };
+  for (const [word, [source, ipa]] of Object.entries(derived)) {
+    const r = fe.wordToPhonemes(word);
+    is(word + ' by rule', r.source + ' ' + r.ipa, source + ' ' + ipa);
+  }
+  is('and the neural model is not asked', fe.wordToPhonemes('naked').source, 'dict');
+
+  /* the plural ending takes the voice of the phone it lands on */
+  const plurals = { cubits: 'S', loins: 'Z', euros: 'Z', rocks: 'S', beds: 'Z' };
+  for (const [word, ending] of Object.entries(plurals)) {
+    const r = fe.wordToPhonemes(word);
+    is(word + ' plural ends in ' + ending, r.arpabet[r.arpabet.length - 1], ending);
+  }
+}
+
+console.log('a readings patch fills holes without touching the dictionary');
+{
+  is('the patch answers saith', fePatched.wordToPhonemes('saith').source, 'patch');
+  is('with the reading written down', fePatched.wordToPhonemes('saith').ipa, 'sˈɛθ');
+  is('and sepulchres', fePatched.wordToPhonemes('sepulchres').ipa, 'sˈɛpəlkəɹz');
+  is('without a patch the same word is guessed', fe.wordToPhonemes('saith').source, 'neural');
+  is('a dictionary word is untouched either way', fePatched.wordToPhonemes('water').source, 'dict');
+  const shadow = Object.keys(READINGS).filter(w => cmudict[w] || cmudict[w + '(1)']);
+  is('no patch entry shadows CMUdict', shadow.join(' '), '');
+  const badStress = Object.entries(READINGS)
+    .filter(([, p]) => p.split(' ').filter(t => t.endsWith('1')).length !== 1)
+    .map(([w]) => w);
+  is('every patch entry carries exactly one primary stress', badStress.join(' '), '');
 }
 
 console.log('every symbol the front end can emit has an id');
