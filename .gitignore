@@ -1,0 +1,16 @@
+# Built, not sourced.
+dist/
+
+# Fetched by tools/get-data.sh, never committed: the dictionary and the neural
+# G2P weights are somebody else's Apache-2.0 data files, and git has no reason
+# to hold a second copy of them.
+g2p/data/*.json
+
+# Same for the voice weights — and those carry their own licence, so it matters
+# even more that they never enter the repository. See voices/README.md.
+voices/*
+!voices/README.md
+
+node_modules/
+__pycache__/
+*.wav

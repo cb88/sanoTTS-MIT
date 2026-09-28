@@ -1,0 +1,63 @@
+{
+  "_comment": "What sanoMIT forked, from where, and under what licence. tools/check-provenance.sh verifies it. The forked files are byte-identical to upstream on purpose: the fork is the audit trail.",
+  "forked": [
+    {
+      "path": "runtime/src/snt_nano.c",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/src/snt_nano.c",
+      "sha256": "46357762ea163af7dc23bc2b4f47378a571386f2f4fd384eb74872e33a7db88e"
+    },
+    {
+      "path": "runtime/src/snt_kernels_ref.c",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/src/snt_kernels_ref.c",
+      "sha256": "2c310b765e245c67fe7fedb82b62eb5c19e709f7e7f6c489c073eff3e829ca33"
+    },
+    {
+      "path": "runtime/include/snt_nano.h",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/include/snt_nano.h",
+      "sha256": "59749fba949e52e9e6d6b66bbac818ea43813e367edbc04990d04481ae192ea6"
+    },
+    {
+      "path": "runtime/include/snt_port.h",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/include/snt_port.h",
+      "sha256": "ea50294bb811b0cbef74796300ae419e3ccbf713ec0a94a393cdec3f25ad796d"
+    },
+    {
+      "path": "runtime/ports/host/snt_port_host.c",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/ports/host/snt_port_host.c",
+      "sha256": "2b29d8539d5e0ee352e83e7f0d9e1869b72026db14dcf2d78b996ba710046675"
+    },
+    {
+      "path": "runtime/models/en_us_e13b/nano_q8_meta.h",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Ampixa",
+      "from": "vendor/sanoTTS/mcu/models/en_us_e13b/nano_q8_meta.h",
+      "sha256": "ccdaa20f1268ee8ec98bb2f71bf900e36bdc672488b86d2b30d773b80a5892eb"
+    }
+  ],
+  "not_forked": {
+    "_comment": "Deliberately NOT taken from vendor/sanoTTS, and why. Anything there that touches espeak-ng, misaki or piper is GPL-3.0.",
+    "mcu/ports/wasm/espeak/**": "espeak-ng itself: GPL-3.0, and the thing this fork exists to avoid",
+    "mcu/ports/wasm/snt_g2p_wasm.c": "the espeak G2P shim: GPL-3.0",
+    "mcu/ports/wasm/snt_nano_wasm.c": "not in the MIT file list; sanoMIT's wasm face is runtime/ports/wasm/smit_wasm.c",
+    "mcu/ports/wasm/snt_port_wasm.c": "not in the MIT file list; sanoMIT's port is runtime/ports/wasm/smit_port_wasm.c",
+    "mcu/src/snt_front_*.c, snt_piperlite*.c, snt_trellis.c": "not in the MIT file list, so GPL-3.0; the nano line does not need them",
+    "mcu/test/**": "test fixtures including espeak-derived id goldens: GPL-3.0. sanoMIT's baseline was recorded from its own runtime instead",
+    "web/**, pypkg/**, npmpkg/**": "the GPL packaging and front ends",
+    "tools/**": "training and export tooling: GPL-3.0"
+  },
+  "data_not_committed": {
+    "g2p/data/cmudict.json": "CMU Pronouncing Dictionary via tiny-tts (Apache-2.0)",
+    "g2p/data/g2p_model.json": "g2p_en neural G2P weights via tiny-tts (Apache-2.0)",
+    "voices/heartnano/*.bin": "the voice weights: upstream voice DATA with its own licence, see voices/README.md"
+  }
+}

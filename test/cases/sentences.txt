@@ -1,0 +1,21 @@
+# One sentence per line: what the engine has to be able to say.
+# Lines stay under about 150 characters because the model caps at 207 tokens.
+# These are the rig's own lines (src/js/14-data-lore.js), not filler.
+Hello world, the weather is nice today.
+SUIT ONLINE. OXYGEN 71 PERCENT. HULL INTEGRITY: YOURS, NOT THE SHIP'S.
+Good morning. Or evening. The sun is coming over Anvil now, so: morning.
+There is a thing I need you to hear before you panic, and I would like it to be before.
+The Kestrel Prime exploded at 04:11. Not dramatically.
+Five other hulls. A habitat ring with its spine taken out. Six hundred and eleven dead.
+Dock control, Anchor Ring. You are on an Authority-restricted approach with a hull registration that reads like a joke.
+This is a lifeboat, we have four people and a failing scrubber. Please do not go past us again.
+WARNING. You have made a hole in a volume that was holding air.
+Patch the hole. Then let the scrubber refill the volume.
+Inspector Haldy of Claims 14-F, Portmaster Vasquez, Dr. Greb, and the flight recorder KX-9 Kestrel are on this frequency.
+Oxygen at 42 percent. Hull pressure 1013. Docking at 09:05, backup at 14:30.
+Dr. Voss paid $3.50 for the 21st sample at 1 a.m.
+Kessler's kessellite thruster made a wet thwup near the airlock, and the regolith cracked against the xenolith.
+Bird, word, held, fur. The water bottle is on the table.
+About the hour, our tower is out. Station, motion, nation, education.
+Two thousand twenty-six, and the year 1066. One thousand and twenty-four.
+She sells seashells by the seashore, and the shells she sells are surely seashells.

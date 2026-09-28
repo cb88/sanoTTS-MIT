@@ -1,0 +1,92 @@
+{
+  "Hello world, the weather is nice today.": {
+    "hash": "0x3f2cc811d18115c6",
+    "samples": 73216,
+    "seconds": 3.051
+  },
+  "SUIT ONLINE. OXYGEN 71 PERCENT. HULL INTEGRITY: YOURS, NOT THE SHIP'S.": {
+    "hash": "0xbfbe64d3e70b874d",
+    "samples": 156928,
+    "seconds": 6.539
+  },
+  "Good morning. Or evening. The sun is coming over Anvil now, so: morning.": {
+    "hash": "0x97d9bc063197ccb9",
+    "samples": 140288,
+    "seconds": 5.845
+  },
+  "There is a thing I need you to hear before you panic, and I would like it to be before.": {
+    "hash": "0x5a7521bc8f3369b1",
+    "samples": 128000,
+    "seconds": 5.333
+  },
+  "The Kestrel Prime exploded at 04:11. Not dramatically.": {
+    "hash": "0x886f15c2d76300ed",
+    "samples": 109824,
+    "seconds": 4.576
+  },
+  "Five other hulls. A habitat ring with its spine taken out. Six hundred and eleven dead.": {
+    "hash": "0xbb8cf8b0ad746b06",
+    "samples": 150016,
+    "seconds": 6.251
+  },
+  "Dock control, Anchor Ring. You are on an Authority-restricted approach with a hull registration that reads like a joke.": {
+    "hash": "0x7570ddb714c22894",
+    "samples": 188928,
+    "seconds": 7.872
+  },
+  "This is a lifeboat, we have four people and a failing scrubber. Please do not go past us again.": {
+    "hash": "0xa6260e8c3991f759",
+    "samples": 154112,
+    "seconds": 6.421
+  },
+  "WARNING. You have made a hole in a volume that was holding air.": {
+    "hash": "0x5a9bb646f3086293",
+    "samples": 103168,
+    "seconds": 4.299
+  },
+  "Patch the hole. Then let the scrubber refill the volume.": {
+    "hash": "0x89660ac85f6f76e0",
+    "samples": 87040,
+    "seconds": 3.627
+  },
+  "Inspector Haldy of Claims 14-F, Portmaster Vasquez, Dr. Greb, and the flight recorder KX-9 Kestrel are on this frequency.": {
+    "hash": "0xdec11cc33d4837b5",
+    "samples": 228608,
+    "seconds": 9.525
+  },
+  "Oxygen at 42 percent. Hull pressure 1013. Docking at 09:05, backup at 14:30.": {
+    "hash": "0x87e71570b48ea156",
+    "samples": 204544,
+    "seconds": 8.523
+  },
+  "Dr. Voss paid $3.50 for the 21st sample at 1 a.m.": {
+    "hash": "0x02b67d70bc4bfc46",
+    "samples": 126464,
+    "seconds": 5.269
+  },
+  "Kessler's kessellite thruster made a wet thwup near the airlock, and the regolith cracked against the xenolith.": {
+    "hash": "0xddd9277d1ce39f7c",
+    "samples": 148736,
+    "seconds": 6.197
+  },
+  "Bird, word, held, fur. The water bottle is on the table.": {
+    "hash": "0xfa3f22330e0f0c99",
+    "samples": 110592,
+    "seconds": 4.608
+  },
+  "About the hour, our tower is out. Station, motion, nation, education.": {
+    "hash": "0x2968a2e527281629",
+    "samples": 139520,
+    "seconds": 5.813
+  },
+  "Two thousand twenty-six, and the year 1066. One thousand and twenty-four.": {
+    "hash": "0x3e08a9a66167c63a",
+    "samples": 155392,
+    "seconds": 6.475
+  },
+  "She sells seashells by the seashore, and the shells she sells are surely seashells.": {
+    "hash": "0xfb39c59152d90afb",
+    "samples": 126976,
+    "seconds": 5.291
+  }
+}
